@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> Pedra 🪨 Papel 📄 Tesoura  </title>
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.1/qrcode.js" integrity="sha512-hAz8pxm1kva4chZWPXQhGehvvlIj1Loka653sQXoYHNj4sgSukoR3ZKyHEOT7kFGVW17wUqD9CbKeviIJ2XFKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+        <script src="{{ url_for('static', filename='js/game.js') }}" type="application/javascript" charset="utf-8"></script>
+        <link href="{{ url_for('static', filename='css/game.css') }}" rel="stylesheet">
+    </head>
+    <body> 
+      <input id="is-playing" type="hidden" value="">
+        <div class="container py-3">
+            <div class="row row-cols-1 mb-3 text-center">
+              <div id="you-container" class="col mb-2">
+                <div class="card mb-2 h-100 rounded-3 shadow-sm">
+                  <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">
+                        <input id="you-player" type="hidden">
+                        <span id="you-username"> Obtendo nome do usuário ... ⏳</span>
+                    </h4>
+                  </div>
+                  <div class="card-body">
+                      <div class="mt-2 image-radio-group not-clickable-div">
+                        <input type="radio" id="you-rock" name="you-choice" value="rock" />
+                        <label for="you-rock" class="shakable">
+                            <img src="{{ url_for('static', filename='img/rock.png') }}" alt="rock" />
+                        </label>
+                        <input type="radio" id="you-paper" name="you-choice" value="paper" />
+                        <label for="you-paper" class="shakable">
+                            <img src="{{ url_for('static', filename='img/paper.png') }}" alt="paper" />
+                        </label>
+                        <input type="radio" id="you-scissor" name="you-choice" value="scissor" />
+                        <label for="you-scissor" class="shakable">
+                            <img src="{{ url_for('static', filename='img/scissor.png') }}" alt="scissor" />
+                        </label>
+                      </div>
+                      <h4 class="mt-2 fw-normal">
+                        <span id="you-pick">Esperando Oponente ... ⏳</span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div id="they-container" class="col mb-2">
+                <div class="card mb-2 h-100 rounded-3 shadow-sm">
+                  <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">
+                        <input id="they-player" type="hidden">
+                        <span id="they-username"> Esperando Oponente ... ⏳</span>
+                    </h4>
+                  </div>
+                  <div id="they-actions" class="card-body" style="display: none">
+                      <div class="mt-2 image-radio-group not-clickable-div">
+                        <input type="radio" id="they-rock" name="choice" value="rock" />
+                        <label for="they-rock" class="shakable">
+                            <img src="{{ url_for('static', filename='img/rock.png') }}" alt="rock" />
+                        </label>
+                        <input type="radio" id="they-paper" name="choice" value="paper" />
+                        <label for="they-paper" class="shakable">
+                            <img src="{{ url_for('static', filename='img/paper.png') }}" alt="paper" />
+                        </label>
+                        <input type="radio" id="they-scissor" name="choice" value="scissor" />
+                        <label for="they-scissor" class="shakable">
+                            <img src="{{ url_for('static', filename='img/scissor.png') }}" alt="scissor" />
+                        </label>
+                      </div>
+                      <h4 class="mt-2 fw-normal">
+                        <span id="they-pick"> Aguardando sua escolha ... ⏳</span>
+                    </h4>
+                  </div>
+                  <div id="they-join" class="card-body">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img class="card-title" src="" id="qrimg" alt="" style="min-width: 148px; min-height: 148px; visibility: hidden"/>
+                    </div>
+                    <h5 class="card-title">
+                        <a id="room-link" href="" target="_blank" referrerpolicy="no-referrer">...</a>
+                    </h5>
+                    <button id="copy-link-btn" type="button" class="w-100 btn btn-lg btn-outline-primary">
+                      Copiar Link 🔗📋
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="banner-play-again" class="text-center"></div>
+            <div id="banner-alert" class="text-center alert alert-light fade" role="alert"></div>
+        </div>
+    </body>
+</html>

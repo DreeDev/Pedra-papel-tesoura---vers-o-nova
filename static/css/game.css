@@ -1,0 +1,141 @@
+body {
+    background-image:url("../img/background.jpeg");
+    background-size: cover;       /* Faz a imagem ocupar a tela toda */
+    background-position: center;  /* Centraliza o fundo */
+    background-repeat: no-repeat; /* Impede que a imagem fique se repetindo */
+    background-attachment: fixed;
+}
+
+.card-body {
+    background:
+    radial-gradient(circle at 20% 30%, rgba(173,216,230,0.25), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(186,85,211,0.25), transparent 40%),
+    linear-gradient(
+      135deg,
+      #cfe9ff,
+      #e6d9ff,
+      #dff5ea,
+      #ffe1ec
+    );
+
+  background-size: 300% 300%;
+  animation: flow 25s ease-in-out infinite;
+}
+
+.card-header.py-3 {
+  padding: 20px;
+  
+  background:
+    radial-gradient(circle at 20% 30%, rgba(173,216,230,0.35), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(186,85,211,0.35), transparent 40%),
+    linear-gradient(
+      135deg,
+      #cfe9ff,
+      #e6d9ff,
+      #dff5ea,
+      #ffe1ec
+    );
+
+  background-size: 300% 300%;
+  animation: flow 18s ease-in-out infinite;
+}
+.container {
+  max-width: 510px;
+}
+
+.image-radio-group input[type="radio"] {
+  display: none; /* Hide the actual radio button */
+}
+
+.image-radio-group label {
+  cursor: pointer; /* Makes the image clickable */
+  display: inline-block;
+  border: 5px solid #111111; /* Default border style */
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+.image-radio-group label img {
+  width: 80px;
+  height: 80px;
+  display: block;
+}
+
+/* Style for the selected (checked) image */
+.image-radio-group input[type="radio"]:checked + label {
+  border-color: #ff0000; /* Highlight color when checked */
+  background-color: #79000075;
+}
+
+.image-radio-group label:hover {
+  border-color: #e40606;
+}
+
+.shakable {
+  /* empty selector to apply shakable pseudo class.*/
+}
+
+/* Apply the animation when hovering over the button */
+.shakable:hover {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Keyframes for the shake animation */
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+.not-clickable-div {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default; /* Optional: Changes cursor to default arrow instead of pointer */
+}
+
+.flash-button {
+  background-color: #004A7F;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  /* Apply the animation */
+  animation: glowing 1500ms infinite; /* 1.5s duration, infinite loop */
+}
+
+@keyframes glowing {
+  0% {
+    background-color: #B20000; /* Start color */
+    box-shadow: 0 0 3px #B20000;
+  }
+  50% {
+    background-color: #FF0000; /* Midpoint flash color */
+    box-shadow: 0 0 20px #FF0000;
+  }
+  100% {
+    background-color: #B20000; /* Return to start color */
+    box-shadow: 0 0 3px #B20000;
+  }
+}
+
+@keyframes flow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+
+}
